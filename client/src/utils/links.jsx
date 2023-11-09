@@ -24,6 +24,11 @@ const links = [
     icon: <AiOutlineCloud />,
   },
   {
+    text: 'Create venue',
+    path: 'create-venue',
+    icon: <AiOutlineCloud />,
+  },
+  {
     text: 'players',
     path: 'players',
     icon: <AiOutlineUser />,

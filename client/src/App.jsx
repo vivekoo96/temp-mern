@@ -17,6 +17,7 @@ import {
   Payment,
   Game,
   Tournament,
+  AddVenue,
 } from './pages'
 import { action as registerAction } from './pages/Register'
 import { action as loginAction } from './pages/Login'
@@ -26,7 +27,11 @@ import { loader as AllEventLoader } from './pages/AllEvent'
 import { action as editEventAction } from './pages/EditEvent'
 import { loader as editEventLoader } from './pages/EditEvent'
 import { action as deleteEventAction } from './pages/DeleteEvent'
+import { action as deleteVenueAction } from './pages/DeleteVenue'
 import { loader as adminLoader } from './pages/Admin'
+import { loader as vanueLoader } from './pages/Venue'
+import { action as addVenueAction } from './pages/AddVenue'
+import { loader as getVenue } from './pages/AddEvent'
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true'
   document.body.classList.toggle('dark-theme', isDarkTheme)
@@ -63,6 +68,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AddEvent />,
+            loader: getVenue,
             action: addEvent,
           },
           {
@@ -79,8 +85,14 @@ const router = createBrowserRouter([
             element: <Players />,
           },
           {
+            path: 'create-venue',
+            element: <AddVenue />,
+            action: addVenueAction,
+          },
+          {
             path: 'venues',
             element: <Venue />,
+            loader: vanueLoader,
           },
           {
             path: 'payment',
@@ -112,6 +124,10 @@ const router = createBrowserRouter([
           {
             path: 'delete-event/:id',
             action: deleteEventAction,
+          },
+          {
+            path: 'delete-venue/:id',
+            action: deleteVenueAction,
           },
         ],
       },

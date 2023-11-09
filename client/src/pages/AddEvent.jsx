@@ -1,10 +1,14 @@
 import { FormRow, FormRowSelect } from '../components'
 import Wrapper from '../assets/wrappers/DashboardFormPage'
+import { useState } from 'react'
+import Search from '../components/Search.jsx'
+import { useLoaderData } from 'react-router-dom'
 import {
   Form,
   useNavigation,
   redirect,
   useOutletContext,
+  Link,
 } from 'react-router-dom'
 import {
   TOURNAMENT_STATE,
@@ -15,6 +19,16 @@ import {
 } from '../../../utils/constants.js'
 import { toast } from 'react-toastify'
 import customFetch from '../utils/customFetch'
+
+export const loader = async () => {
+  try {
+    const { data } = await customFetch.get('/venues')
+    return { data }
+  } catch (error) {
+    toast.error(error?.response?.data?.msg)
+    return error
+  }
+}
 
 export const action = async ({ request }) => {
   const formData = await request.formData()
@@ -30,8 +44,31 @@ export const action = async ({ request }) => {
 
 const AddEvent = () => {
   const { user } = useOutletContext()
+  const { data } = useLoaderData()
   const navigation = useNavigation()
   const isSubmitting = navigation.state === 'submitting'
+  const [selected, setSelected] = useState([])
+  const [inputText, setInputText] = useState('')
+  const [suggestions, setSuggestions] = useState([])
+  const [selectedSuggestion, setSelectedSuggestion] = useState('')
+
+  const handleInputChange = async (e) => {
+    const text = e.target.value
+    setInputText(text)
+    try {
+      const { data } = await customFetch.get(`/venues/search?name=${text}`)
+      const { searchVanue } = data
+      setSuggestions(searchVanue)
+    } catch (error) {
+      toast.error(error?.response?.data?.msg)
+    }
+  }
+  const handleSuggestionSelect = (suggestion) => {
+    setSelectedSuggestion(suggestion)
+    setInputText(suggestion)
+    setSuggestions([])
+  }
+
   return (
     <Wrapper>
       <Form method='post' className='form'>
@@ -104,16 +141,24 @@ const AddEvent = () => {
               type='text'
               name='venue'
               id='venue'
+              value={inputText}
+              onChange={handleInputChange}
+              placeholder='search vanue ..'
               className='form-input'
-              style={{ width: '80%' }}
+              style={{ width: '70%' }}
             />
-            <button
-              type='button'
+            <Link
+              to='./create-venue'
               className='btn register-link'
-              style={{ height: '35px' }}
+              style={{ height: '36px' }}
             >
               + Venue
-            </button>
+            </Link>
+            <Search
+              suggestions={suggestions}
+              handleSuggestionSelect={handleSuggestionSelect}
+              selectedSuggestion={selectedSuggestion}
+            />
           </div>
           <FormRowSelect
             labelText=' Visibility'
