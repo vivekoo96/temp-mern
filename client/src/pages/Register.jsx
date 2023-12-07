@@ -26,6 +26,7 @@ function Register() {
         <Logo />
         <h4>Register</h4>
         <FormRow type='text' name='name' />
+        <input type='hidden' name='role' value='director' />
         <FormRow type='text' name='lastName' labelText='last Name' />
         <FormRow type='text' name='location' />
         <FormRow type='email' name='email' />

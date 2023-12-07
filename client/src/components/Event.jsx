@@ -19,6 +19,7 @@ const Event = ({
   startDate,
   endDate,
   venue,
+  venueInfo,
   visibility,
   entryFee,
   prizeDetails,
@@ -42,7 +43,11 @@ const Event = ({
       </header>
       <div className='content'>
         <div className='content-center'>
-          <EventInfo icon={<FaLocationArrow />} text={venue} label='Vanue' />
+          <EventInfo
+            icon={<FaLocationArrow />}
+            text={venueInfo.name}
+            label='Vanue'
+          />
           <EventInfo icon={<FaCalendarAlt />} text={date} label='created at' />
           <EventInfo
             icon={<FaCalendarAlt />}

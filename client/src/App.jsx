@@ -32,6 +32,7 @@ import { loader as adminLoader } from './pages/Admin'
 import { loader as vanueLoader } from './pages/Venue'
 import { action as addVenueAction } from './pages/AddVenue'
 import { loader as getVenue } from './pages/AddEvent'
+import { loader as venueLoader } from './pages/AddVenue'
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true'
   document.body.classList.toggle('dark-theme', isDarkTheme)
@@ -50,11 +51,6 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
 
-      {
-        path: 'register',
-        element: <Register />,
-        action: registerAction,
-      },
       {
         path: 'login',
         element: <Login />,
@@ -88,6 +84,7 @@ const router = createBrowserRouter([
             path: 'create-venue',
             element: <AddVenue />,
             action: addVenueAction,
+            loader: venueLoader,
           },
           {
             path: 'venues',

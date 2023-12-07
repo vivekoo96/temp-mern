@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius);
@@ -29,6 +29,9 @@ const Wrapper = styled.section`
     display: grid;
     place-items: center;
   }
+  .with-100 {
+    width: 100%;
+  }
   @media (min-width: 992px) {
     .form-center {
       grid-template-columns: 1fr 1fr;
@@ -41,6 +44,6 @@ const Wrapper = styled.section`
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
-`;
+`
 
-export default Wrapper;
+export default Wrapper

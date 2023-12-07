@@ -144,20 +144,9 @@ const AddEvent = () => {
               value={inputText}
               onChange={handleInputChange}
               placeholder='search vanue ..'
-              className='form-input'
-              style={{ width: '70%' }}
-            />
-            <Link
-              to='./create-venue'
-              className='btn register-link'
-              style={{ height: '36px' }}
-            >
-              + Venue
-            </Link>
-            <Search
-              suggestions={suggestions}
-              handleSuggestionSelect={handleSuggestionSelect}
-              selectedSuggestion={selectedSuggestion}
+              className={
+                user.role === 'admin' ? 'form-input with-100' : 'form-input'
+              }
             />
           </div>
           <FormRowSelect

@@ -11,7 +11,7 @@ const Landing = () => {
       <div className='container page'>
         <div className='info'>
           <h1>
-            Pool <span>Event</span> app
+            <span>Event</span> app
           </h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat
@@ -19,9 +19,9 @@ const Landing = () => {
             quia, qui fugit sed, non hic veniam blanditiis ad aspernatur aliquam
             minus nihil!
           </p>
-          <Link to='/register' className='btn register-link'>
+          {/* <Link to='/register' className='btn register-link'>
             Register
-          </Link>
+          </Link> */}
           <Link to='/login' className='btn '>
             Login
           </Link>

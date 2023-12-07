@@ -7,7 +7,7 @@ const EventContainer = () => {
   if (events.length === 0) {
     return (
       <Wrapper>
-        <h2>No Event to display</h2>
+        <h2>No User to display</h2>
       </Wrapper>
     )
   }

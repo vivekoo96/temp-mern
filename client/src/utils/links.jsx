@@ -9,45 +9,22 @@ import { TbTournament } from 'react-icons/tb'
 
 const links = [
   {
-    text: 'Create tournaments',
+    text: 'Create Reels',
     path: '.',
     icon: <FaWpforms />,
   },
   {
-    text: 'all tournaments',
+    text: 'all User',
     path: 'all-tournaments',
     icon: <MdQueryStats />,
   },
+
   {
-    text: 'venues',
-    path: 'venues',
-    icon: <AiOutlineCloud />,
-  },
-  {
-    text: 'Create venue',
-    path: 'create-venue',
-    icon: <AiOutlineCloud />,
-  },
-  {
-    text: 'players',
-    path: 'players',
-    icon: <AiOutlineUser />,
-  },
-  {
-    text: 'payment',
-    path: 'payment',
-    icon: <AiFillBank />,
-  },
-  {
-    text: 'mamange game',
+    text: 'mamange Reels',
     path: 'game',
     icon: <IoGameControllerOutline />,
   },
-  {
-    text: 'tournament types',
-    path: 'tournament',
-    icon: <TbTournament />,
-  },
+
   {
     text: 'stats',
     path: 'stats',

@@ -7,16 +7,18 @@ import {
   redirect,
   useOutletContext,
 } from 'react-router-dom'
-import {
-  TOURNAMENT_STATE,
-  EVENT_TYPE,
-  TOURNAMENT_FORMAT,
-  VISIBILITY,
-  HANDICAP_FORMAT,
-} from '../../../utils/constants.js'
+import { VISIBILITY } from '../../../utils/constants.js'
 import { toast } from 'react-toastify'
 import customFetch from '../utils/customFetch'
-
+export const loader = async () => {
+  try {
+    const response = await customFetch.get('/users/admin/app-stats')
+    return response.data
+  } catch (error) {
+    toast.error('yo are not authorize to view this page')
+    return redirect('/dashboard')
+  }
+}
 export const action = async ({ request }) => {
   const formData = await request.formData()
   const data = Object.fromEntries(formData)

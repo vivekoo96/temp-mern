@@ -2,9 +2,67 @@ import StatusCodes from 'http-status-codes'
 import { NotFoundError } from '../errors/customError.js'
 import Event from '../models/EventModel.js'
 import Vanue from '../models/VanueModel.js'
+import mongoose from 'mongoose'
 export const getAllEvent = async (req, res) => {
-  const events = await Event.find({})
-  res.status(StatusCodes.OK).json({ events })
+  if (req.user.role === 'admin') {
+    Event.aggregate([
+      {
+        $lookup: {
+          from: 'vanues',
+          localField: 'venue',
+          foreignField: '_id',
+          as: 'venueInfo',
+        },
+      },
+    ])
+      .exec()
+      .then((events) => {
+        res.status(StatusCodes.OK).json({ events })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  } else {
+    const eventPipeline = [
+      {
+        $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) },
+      },
+    ]
+
+    const venuePipeline = [
+      {
+        $lookup: {
+          from: 'vanues', // Make sure this matches your collection name
+          localField: 'venue',
+          foreignField: '_id',
+          as: 'venueInfo',
+        },
+      },
+    ]
+
+    Event.aggregate(eventPipeline)
+      .exec()
+      .then((events) => {
+        Vanue.aggregate(venuePipeline) // Change 'Vanue' to 'Venue' if that's the correct model name
+          .exec()
+          .then((vanues) => {
+            const eventsWithVenueInfo = events.map((event) => {
+              const venueInfo = vanues.find(
+                (venue) => venue._id.toString() === event.venue.toString()
+              )
+              event.venueInfo = venueInfo
+              return event
+            })
+            res.status(StatusCodes.OK).json({ events: eventsWithVenueInfo })
+          })
+          .catch((venueError) => {
+            console.error(venueError)
+          })
+      })
+      .catch((eventError) => {
+        console.error(eventError)
+      })
+  }
 }
 
 export const createEvent = async (req, res) => {

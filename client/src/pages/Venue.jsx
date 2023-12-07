@@ -1,20 +1,29 @@
 import { toast } from 'react-toastify'
 import { VanueContainer, SearchContainer } from '../components'
 import customFetch from '../utils/customFetch'
-import { useLoaderData } from 'react-router-dom'
-import { useContext, createContext } from 'react'
+import { useLoaderData, redirect } from 'react-router-dom'
+import { useContext, createContext, useEffect, useState } from 'react'
 export const loader = async () => {
   try {
-    const { data } = await customFetch.get('/venues')
-    return { data }
+    const response = await customFetch.get('/users/admin/app-stats')
+    return response.data
   } catch (error) {
-    toast.error(error?.response?.data?.msg)
-    return error
+    toast.error('yo are not authorize to view this page')
+    return redirect('/dashboard')
   }
 }
 const AllVenueContext = createContext()
+
 const Venue = () => {
-  const { data } = useLoaderData()
+  const [venue, setVenue] = useState(null)
+  useEffect(() => {
+    const getVenue = async () => {
+      const { data } = await customFetch.get('/venues')
+      setVenue[data]
+    }
+    getVenue()
+  }, [])
+  const { data } = venue
   return (
     <AllVenueContext.Provider value={{ data }}>
       <SearchContainer />
